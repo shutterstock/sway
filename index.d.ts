@@ -31,7 +31,7 @@ declare class SwaggerApi{
 //TODO confirm this is all any of them use
 declare interface Request {
     [index: string]: any
-    url: string
+    url?: string
 }
 
 
