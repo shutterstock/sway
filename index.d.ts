@@ -1,7 +1,7 @@
 export declare function create(options : Options) : Promise<SwaggerApi>
 
 declare type Options = {
-    defintion: Object | string,
+    definition: Object | string,
     jsonRefs?: Object,
     customValidatiors?: ValidatorCallback[]
 }
