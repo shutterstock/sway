@@ -110,7 +110,7 @@ declare class Path{
 
     getOperation(method : string): Operation[]
     getOperations(): Operation[]
-    getOperationsByTag(tag): Operation[]
+    getOperationsByTag(tag: any): Operation[]
     getParameters(): Parameter[]
 }
 
