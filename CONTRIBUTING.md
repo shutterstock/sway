@@ -10,13 +10,11 @@ Before contributing to sway, it makes sense to understand the development proces
 no time will be spent talking about it.  sway uses Gulp as its task runner, which is used to build, lint, test,
 etc. all parts of sway.  Below are the gulp tasks:
 
-* `browserify`: Builds the browser binaries using [Browserify][browserify]
-* `clean`: Removes all development artifacts *(`bower_components`, `coverage`, ...)*
+* `clean`: Removes all development artifacts *(`coverage`, ...)*
 * `docs`: Generates `docs/API.md` from the [jsdoc][jsdoc] in the necessary sources
 * `lint`: Lint checks the necessary sources using [ESLint][eslint]
-* `test-browser`: Runs the test suite for the browser
 * `test-node`: Runs the test suite for Node.js
-* `test`: Runs both `test-node` and `test-browser`
+* `test`: Runs both `test-node`
 
 If you just run `gulp`, all of these tasks mentioned above will be ran in the proper order.  When working on sway
 myself, I typically just run `gulp test-node` while working on the bug fix or feature.  Once I get the code ready to
@@ -56,8 +54,6 @@ checks and failing tests but this is a safety net only)*
 clear)*
 4. Should include tests *(Bug fixes and features should have tests included with them at all times)*
 
-[bower]: http://bower.io/
-[browserify]: http://browserify.org/
 [eslint]: http://eslint.org/
 [gulp]: http://gulpjs.com/
 [jsdoc]: http://usejsdoc.org/

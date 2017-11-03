@@ -27,29 +27,14 @@
 'use strict';
 
 var assert = require('assert');
-var fs = require('fs');
 var helpers = require('../lib/helpers');
-var path = require('path');
-var Sway = typeof window === 'undefined' ? require('..') : window.Sway;
-var YAML = require('js-yaml');
+var Sway = require('../');
 
-var documentBase = path.join(__dirname, 'browser', 'documents');
-var relativeBase = typeof window === 'undefined' ? documentBase : 'base/documents';
-var swaggerDoc = YAML.safeLoad(fs.readFileSync(path.join(__dirname, './browser/documents/2.0/swagger.yaml'), 'utf8'));
-var swaggerDocRelativeRefs = YAML.safeLoad(fs.readFileSync(path.join(__dirname, './browser/documents/2.0/swagger-relative-refs.yaml'), 'utf8'));
+var swaggerDoc = require('./fixtures/swagger');
 var swaggerDocValidator = helpers.getJSONSchemaValidator();
 var swaggerApi;
-var swaggerApiRelativeRefs;
 
-function fail (msg) {
-  assert.fail(msg);
-}
-
-module.exports.documentBase = documentBase;
-
-module.exports.fail = fail;
-
-module.exports.getSwaggerApi = function (callback) {
+function getSwaggerApi(callback) {
   if (swaggerApi) {
     callback(swaggerApi);
   } else {
@@ -66,42 +51,32 @@ module.exports.getSwaggerApi = function (callback) {
   }
 };
 
-module.exports.getSwaggerApiRelativeRefs = function (callback) {
-  if (swaggerApiRelativeRefs) {
-    callback(swaggerApiRelativeRefs);
-  } else {
-    Sway.create({
-      definition: swaggerDocRelativeRefs,
-      jsonRefs: {location: path.join(relativeBase, './2.0/swagger-relative-refs.yaml')}
-    })
-      .then(function (obj) {
-        swaggerApiRelativeRefs = obj;
+function fail (msg) {
+  assert.fail(msg);
+}
 
-        callback(swaggerApiRelativeRefs);
-      }, function (err) {
-        callback(err);
-      });
-  }
-};
-
-module.exports.getSway = function () {
+function getSway() {
   return Sway;
 };
 
-module.exports.shouldHadFailed = function () {
+function shouldHadFailed() {
   fail('The code above should had thrown an error');
 };
 
-module.exports.shouldNotHadFailed = function (err) {
+function shouldNotHadFailed(err) {
   console.error(err.stack);
 
   fail('The code above should not had thrown an error');
 };
 
-module.exports.swaggerDoc = swaggerDoc;
+module.exports = {
+  getSwaggerApi: getSwaggerApi,
+  swaggerDoc: swaggerDoc,
+  swaggerDocValidator: swaggerDocValidator,
+  fail: fail,
+  getSway: getSway,
+  shouldHadFailed: shouldHadFailed,
+  shouldNotHadFailed: shouldNotHadFailed
+};
 
-module.exports.swaggerDocPath = path.join(relativeBase, './2.0/swagger.yaml');
-
-module.exports.swaggerDocRelativeRefsPath = path.join(relativeBase, './2.0/swagger-relative-refs.yaml');
-
-module.exports.swaggerDocValidator = swaggerDocValidator;
+console.log(module.exports)

@@ -28,13 +28,6 @@ var _ = require('lodash');
 var helpers = require('./lib/helpers');
 var JsonRefs = require('json-refs');
 var SwaggerApi = require('./lib/types/api');
-var YAML = require('js-yaml');
-
-// Load promises polyfill if necessary
-/* istanbul ignore if */
-if (typeof Promise === 'undefined') {
-  require('native-promise-only');
-}
 
 /**
  * A library for simpler [Swagger](http://swagger.io/) integrations.
@@ -148,7 +141,7 @@ module.exports.create = function (options) {
   });
 
   // Make a copy of the input options so as not to alter them
-  cOptions = _.cloneDeep(options);
+  cOptions = Object.assign({}, options);
 
   //
   allTasks = allTasks
@@ -164,17 +157,6 @@ module.exports.create = function (options) {
 
       // Resolve only relative/remote references
       cOptions.jsonRefs.filter = ['relative', 'remote'];
-
-      // Update the json-refs options to process YAML
-      if (_.isUndefined(cOptions.jsonRefs.loaderOptions)) {
-        cOptions.jsonRefs.loaderOptions = {};
-      }
-
-      if (_.isUndefined(cOptions.jsonRefs.loaderOptions.processContent)) {
-        cOptions.jsonRefs.loaderOptions.processContent = function (res, cb) {
-          cb(undefined, YAML.safeLoad(res.text));
-        };
-      }
 
       // Call the appropriate json-refs API
       if (_.isString(cOptions.definition)) {
