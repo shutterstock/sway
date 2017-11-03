@@ -1,7 +1,7 @@
 export declare function create(options : Options) : Promise<SwaggerApi>
 
 declare type Options = {
-    defintion: Object | string,
+    definition: Object | string,
     jsonRefs?: Object,
     customValidatiors?: ValidatorCallback[]
 }
@@ -31,7 +31,7 @@ declare class SwaggerApi{
 //TODO confirm this is all any of them use
 declare interface Request {
     [index: string]: any
-    url: string
+    url?: string
 }
 
 
@@ -110,7 +110,7 @@ declare class Path{
 
     getOperation(method : string): Operation[]
     getOperations(): Operation[]
-    getOperationsByTag(tag): Operation[]
+    getOperationsByTag(tag: any): Operation[]
     getParameters(): Parameter[]
 }
 
